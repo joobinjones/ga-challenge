@@ -5,34 +5,37 @@ import "../styles/Table.css";
 
 interface IHeaderButtonProps {
   title: string;
+  sortBy: keyof IGame;
 }
 
-const HeaderButton = ({ title }: IHeaderButtonProps): JSX.Element => {
+const HeaderButton = ({ title, sortBy }: IHeaderButtonProps): JSX.Element => {
   const context: IContext = useContext(Context);
   return (
     <th>
-      <button onClick={() => context.setSort(title)}>{title}</button>
+      <button onClick={() => context.setSortField(sortBy)}>{title}</button>
     </th>
   );
 };
 
 const Table = (): JSX.Element => {
   const context: IContext = useContext(Context);
-  console.log(context.sort);
-  return (
+  console.log("SORT", context.sortField);
+  return context.isLoading ? (
+    <div>Loading</div>
+  ) : (
     <table>
       <tr>
-        <HeaderButton title="Area" />
-        <HeaderButton title="Bank" />
-        <HeaderButton title="Zone" />
-        <HeaderButton title="Stand" />
-        <HeaderButton title="Asset" />
-        <HeaderButton title="Net Win" />
-        <HeaderButton title="Old Denom" />
-        <HeaderButton title="New Denom" />
-        <HeaderButton title="Old Payback" />
-        <HeaderButton title="New Payback" />
-        <HeaderButton title="Date" />
+        <HeaderButton title="Area" sortBy="area" />
+        <HeaderButton title="Bank" sortBy="bank" />
+        <HeaderButton title="Zone" sortBy="zone" />
+        <HeaderButton title="Stand" sortBy="stand" />
+        <HeaderButton title="Asset" sortBy="asset" />
+        <HeaderButton title="Net Win" sortBy="netWin" />
+        <HeaderButton title="Old Denom" sortBy="oldDenom" />
+        <HeaderButton title="New Denom" sortBy="newDenom" />
+        <HeaderButton title="Old Payback" sortBy="oldPayback" />
+        <HeaderButton title="New Payback" sortBy="newPayback" />
+        <HeaderButton title="Date" sortBy="date" />
       </tr>
       {context.data.map((ele) => (
         <tr>

@@ -25,19 +25,43 @@ export interface IContext {
   setResetClicked: Function;
   isLoading: boolean;
   setIsLoading: Function;
-  sort: string;
-  setSort: Function;
+  sortField: string;
+  setSortField: Function;
 }
 
-const getData = () => {
+const getData = (): Promise<AxiosResponse<any>> => {
   return axios.get("https://ga-challenge-api.vercel.app/");
 };
 
+const sortData = (
+  data: Array<IGame>,
+  sortField: keyof IGame,
+  sortByGreatest: boolean
+): Array<IGame> => {
+  console.log("TYPE:", typeof data[0][sortField]);
+  return data.sort((a: IGame, b: IGame) => +a[sortField] - +b[sortField]);
+};
+
 const Layout = (): JSX.Element => {
-  const [data, setData] = useState<Array<IGame | null>>([]);
+  const [data, setData] = useState<Array<IGame>>([]);
   const [resetClicked, setResetClicked] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [sort, setSort] = useState<string>("");
+  const [sortField, setSortField] = useState<keyof IGame | null>(null);
+  // unsorted data
+  useEffect(() => {
+    setIsLoading(() => true);
+    if (sortField) {
+      const sortedData: Array<IGame> = sortData(data, sortField, true);
+      setData(() => sortedData);
+    } else {
+      getData()
+        .then((res) => setData(() => res.data.data))
+        .catch(console.error);
+    }
+    setIsLoading(() => false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [resetClicked, sortField]);
+
   const context = {
     data,
     setData,
@@ -45,20 +69,10 @@ const Layout = (): JSX.Element => {
     setResetClicked,
     isLoading,
     setIsLoading,
-    sort,
-    setSort,
+    sortField,
+    setSortField,
   };
-  // unsorted data
-  useEffect(() => {
-    setIsLoading(() => true);
-    getData()
-      .then((res) => res.data.data)
-      .then(setData)
-      .then(() => setIsLoading(() => false))
-      .catch(console.error);
-  }, [resetClicked]);
-
-  useEffect(() => {});
+  console.log(data);
   return (
     <div>
       <Context.Provider value={context}>

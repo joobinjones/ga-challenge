@@ -324,6 +324,11 @@ raw-body@2.4.0:
     iconv-lite "0.4.24"
     unpipe "1.0.0"
 
+react-usestateref@^1.0.5:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/react-usestateref/-/react-usestateref-1.0.5.tgz#0b5659217022a7e88087875ec1745730940b7882"
+  integrity sha512-Bia+nJDuhmakaUQR6ztVPvZnGz2cV8ZOh9Tlgpc2iZorwc2Li4xcQUICtMwdAms5N9bH8FnPX+mXn91EsExvvg==
+
 safe-buffer@5.1.2:
   version "5.1.2"
   resolved "https://registry.yarnpkg.com/safe-buffer/-/safe-buffer-5.1.2.tgz#991ec69d296e0313747d59bdfd2b745c35f8828d"
