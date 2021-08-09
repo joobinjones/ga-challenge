@@ -29,10 +29,6 @@ export interface IContext {
   setSortField: Function;
 }
 
-const getData = (): Promise<AxiosResponse<any>> => {
-  return axios.get("https://ga-challenge-api.vercel.app/");
-};
-
 const sortData = (
   data: Array<IGame>,
   sortField: keyof IGame,
@@ -54,7 +50,8 @@ const Layout = (): JSX.Element => {
       const sortedData: Array<IGame> = sortData(data, sortField, true);
       setData(() => sortedData);
     } else {
-      getData()
+      axios
+        .get("https://ga-challenge-api.vercel.app/")
         .then((res) => setData(() => res.data.data))
         .catch(console.error);
     }
