@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from "axios";
+import axios from "axios";
 import Table from "./components/Table";
 import { useEffect, useState } from "react";
 import { Context } from "./components/context";
@@ -25,6 +25,8 @@ export interface IContext {
   setResetClicked: Function;
   isLoading: boolean;
   setIsLoading: Function;
+  sortByGreatest: boolean;
+  setSortByGreatest: Function;
   sortField: string;
   setSortField: Function;
 }
@@ -34,20 +36,30 @@ const sortData = (
   sortField: keyof IGame,
   sortByGreatest: boolean
 ): Array<IGame> => {
-  console.log("TYPE:", typeof data[0][sortField]);
-  return data.sort((a: IGame, b: IGame) => +a[sortField] - +b[sortField]);
+  console.log("SORT DIRECTION:", sortByGreatest);
+  return [...data].sort((a: IGame, b: IGame) => {
+    const first = sortByGreatest ? b : a;
+    const second = sortByGreatest ? a : b;
+    if (sortField === "date") {
+      return (
+        new Date(first[sortField]).getTime() - new Date(second[sortField]).getTime()
+      );
+    }
+    return +first[sortField] - +second[sortField];
+  });
 };
 
 const Layout = (): JSX.Element => {
   const [data, setData] = useState<Array<IGame>>([]);
   const [resetClicked, setResetClicked] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [sortByGreatest, setSortByGreatest] = useState<boolean>(true);
   const [sortField, setSortField] = useState<keyof IGame | null>(null);
   // unsorted data
   useEffect(() => {
     setIsLoading(() => true);
     if (sortField) {
-      const sortedData: Array<IGame> = sortData(data, sortField, true);
+      const sortedData: Array<IGame> = sortData(data, sortField, sortByGreatest);
       setData(() => sortedData);
     } else {
       axios
@@ -57,7 +69,7 @@ const Layout = (): JSX.Element => {
     }
     setIsLoading(() => false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [resetClicked, sortField]);
+  }, [resetClicked, sortField, sortByGreatest]);
 
   const context = {
     data,
@@ -66,10 +78,11 @@ const Layout = (): JSX.Element => {
     setResetClicked,
     isLoading,
     setIsLoading,
+    sortByGreatest,
+    setSortByGreatest,
     sortField,
     setSortField,
   };
-  console.log(data);
   return (
     <div>
       <Context.Provider value={context}>
