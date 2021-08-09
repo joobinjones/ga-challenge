@@ -1,5 +1,6 @@
 import axios from "axios";
 import Table from "./components/Table";
+import Charts from "./components/Charts";
 import { useEffect, useState } from "react";
 import { Context } from "./components/context";
 
@@ -36,7 +37,6 @@ const sortData = (
   sortField: keyof IGame,
   sortByGreatest: boolean
 ): Array<IGame> => {
-  console.log("SORT DIRECTION:", sortByGreatest);
   return [...data].sort((a: IGame, b: IGame) => {
     const first = sortByGreatest ? b : a;
     const second = sortByGreatest ? a : b;
@@ -55,7 +55,8 @@ const Layout = (): JSX.Element => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [sortByGreatest, setSortByGreatest] = useState<boolean>(true);
   const [sortField, setSortField] = useState<keyof IGame | null>(null);
-  // unsorted data
+  const [view, setView] = useState<string>("table");
+
   useEffect(() => {
     setIsLoading(() => true);
     if (sortField) {
@@ -86,7 +87,7 @@ const Layout = (): JSX.Element => {
   return (
     <div>
       <Context.Provider value={context}>
-        <Table />
+        {view === "table" ? <Table /> : <Charts />}
       </Context.Provider>
     </div>
   );

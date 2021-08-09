@@ -1,3 +1,4 @@
 /node_modules
 /packages/api/node_modules
 /packages/www/node_modules
+/packages/www/=7.21.4
