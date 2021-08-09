@@ -44,6 +44,9 @@
     ]
   },
   "devDependencies": {
-    "@testing-library/dom": "^8.1.0"
+    "@testing-library/dom": "^8.1.0",
+    "prop-types": "^15.6.0",
+    "recharts": "^2.0.10",
+    "ts-transformer-keys": "^0.4.3"
   }
 }

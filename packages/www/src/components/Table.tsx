@@ -45,11 +45,21 @@ const Table = (): JSX.Element => {
   return context.isLoading ? (
     <div>Loading...</div>
   ) : (
-    <div id="table-container">
-      <button className="table-btn" onClick={() => context.setSortField(() => null)}>
+    <div className="comp-container">
+      <button
+        className="btn"
+        onClick={() => {
+          context.setSortByGreatest(() => true);
+          context.setSortField(() => null);
+        }}
+      >
         Reset Sort
       </button>
-      <button className="table-btn">View Charts</button>
+      {context.sortField && (
+        <button className="btn" onClick={() => context.setView(() => "charts")}>
+          View Charts
+        </button>
+      )}
       <table>
         <thead>
           <tr>

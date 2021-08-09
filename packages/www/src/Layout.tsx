@@ -30,6 +30,8 @@ export interface IContext {
   setSortByGreatest: Function;
   sortField: string;
   setSortField: Function;
+  view: string;
+  setView: Function;
 }
 
 const sortData = (
@@ -83,6 +85,8 @@ const Layout = (): JSX.Element => {
     setSortByGreatest,
     sortField,
     setSortField,
+    view,
+    setView,
   };
   return (
     <div>
