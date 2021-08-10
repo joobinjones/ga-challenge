@@ -1,3 +1,10 @@
+#table {
+  overflow-x: auto;
+  overflow-y: auto;
+  max-width: 700px;
+  max-height: 500px;
+}
+
 table,
 th,
 td {
@@ -22,10 +29,7 @@ th {
 .comp-container {
   margin: auto;
   width: 80%;
-  max-width: 700px;
-  max-height: 500px;
-  overflow-x: auto;
-  overflow-y: auto;
+
   .btn:first-child {
     margin-right: 3px;
   }

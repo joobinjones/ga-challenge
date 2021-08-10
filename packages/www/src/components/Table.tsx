@@ -1,8 +1,8 @@
 import { useContext } from "react";
 import { Context } from "../components/context";
 import { IGame, IContext } from "../Layout";
-import "../styles/Table.css";
 import { AiOutlineArrowUp, AiOutlineArrowDown } from "react-icons/ai";
+import "../styles/Table.css";
 
 interface IHeaderButtonProps {
   title: string;
@@ -60,40 +60,42 @@ const Table = (): JSX.Element => {
           View Charts
         </button>
       )}
-      <table>
-        <thead>
-          <tr>
-            <HeaderButton title="Area" sortBy="area" />
-            <HeaderButton title="Bank" sortBy="bank" />
-            <HeaderButton title="Zone" sortBy="zone" />
-            <HeaderButton title="Stand" sortBy="stand" />
-            <HeaderButton title="Asset" sortBy="asset" />
-            <HeaderButton title="Net Win" sortBy="netWin" />
-            <HeaderButton title="Old Denom" sortBy="oldDenom" />
-            <HeaderButton title="New Denom" sortBy="newDenom" />
-            <HeaderButton title="Old Payback" sortBy="oldPayback" />
-            <HeaderButton title="New Payback" sortBy="newPayback" />
-            <HeaderButton title="Date" sortBy="date" />
-          </tr>
-        </thead>
-        <tbody>
-          {context.data.map((ele) => (
-            <tr key={ele?.gameID}>
-              <td>{ele?.area}</td>
-              <td>{ele?.bank}</td>
-              <td>{ele?.zone}</td>
-              <td>{ele?.stand}</td>
-              <td>{ele?.asset}</td>
-              <td>{ele?.netWin}</td>
-              <td>{ele?.oldDenom}</td>
-              <td>{ele?.newDenom}</td>
-              <td>{ele?.oldPayback}</td>
-              <td>{ele?.newPayback}</td>
-              <td>{ele?.date.substring(0, 10)}</td>
+      <div id="table-container">
+        <table>
+          <thead>
+            <tr>
+              <HeaderButton title="Area" sortBy="area" />
+              <HeaderButton title="Bank" sortBy="bank" />
+              <HeaderButton title="Zone" sortBy="zone" />
+              <HeaderButton title="Stand" sortBy="stand" />
+              <HeaderButton title="Asset" sortBy="asset" />
+              <HeaderButton title="Net Win" sortBy="netWin" />
+              <HeaderButton title="Old Denom" sortBy="oldDenom" />
+              <HeaderButton title="New Denom" sortBy="newDenom" />
+              <HeaderButton title="Old Payback" sortBy="oldPayback" />
+              <HeaderButton title="New Payback" sortBy="newPayback" />
+              <HeaderButton title="Date" sortBy="date" />
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {context.data.map((ele) => (
+              <tr key={ele?.gameID}>
+                <td>{ele?.area}</td>
+                <td>{ele?.bank}</td>
+                <td>{ele?.zone}</td>
+                <td>{ele?.stand}</td>
+                <td>{ele?.asset}</td>
+                <td>{ele?.netWin}</td>
+                <td>{ele?.oldDenom}</td>
+                <td>{ele?.newDenom}</td>
+                <td>{ele?.oldPayback}</td>
+                <td>{ele?.newPayback}</td>
+                <td>{ele?.date.substring(0, 10)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };

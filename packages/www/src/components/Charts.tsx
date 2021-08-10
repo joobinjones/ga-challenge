@@ -1,5 +1,5 @@
 import { useContext, useState, useEffect } from "react";
-import { LineChart, Line, CartesianGrid, XAxis, YAxis } from "recharts";
+import { LineChart, Line, CartesianGrid, XAxis, YAxis, Label } from "recharts";
 import { Context } from "./context";
 import { IContext } from "../Layout";
 import "../styles/Charts.css";
@@ -17,6 +17,7 @@ const fields = [
   "newPayback",
   "date",
 ];
+
 interface IChartPoint {
   xCoord: number | string;
   yCoord: number | string;
@@ -43,7 +44,7 @@ const Charts = (): JSX.Element => {
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [comparator]);
-  console.log(chartData);
+
   return (
     <div className="comp-container">
       <button onClick={() => context.setView(() => "table")}>Back to Table</button>
@@ -56,7 +57,7 @@ const Charts = (): JSX.Element => {
         >
           <option>-- Select an option --</option>
           {fields
-            .filter((ele) => ele !== context.sortField)
+            .filter((ele) => ele !== context.sortField && ele !== "date")
             .map((ele) => (
               <option value={ele}>{ele}</option>
             ))}
@@ -67,12 +68,20 @@ const Charts = (): JSX.Element => {
           width={700}
           height={500}
           data={chartData}
-          margin={{ top: 5, right: 20, bottom: 5, left: 20 }}
+          margin={{ top: 20, right: 20, bottom: 20, left: 20 }}
         >
           <Line dataKey="yCoord" stroke="#8884d8" />
           <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
-          <XAxis dataKey="xCoord" />
-          <YAxis dataKey="yCoord" />
+          <XAxis
+            label={{ value: context.sortField, angle: 0, position: "bottom" }}
+            dataKey="xCoord"
+            name={context.sortField}
+          />
+          <YAxis
+            label={{ value: comparator, angle: -90, position: "insideLeft" }}
+            dataKey="yCoord"
+            name={comparator}
+          />
         </LineChart>
       </div>
     </div>
